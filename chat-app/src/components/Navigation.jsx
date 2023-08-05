@@ -20,7 +20,7 @@ function Navigation() {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <img src={logo} style={{ width: 50, height: 50 }} />
+              <img src={logo} style={{ width: 50, height: 50 }} alt="loading" />
             </Navbar.Brand>
           </LinkContainer>
 

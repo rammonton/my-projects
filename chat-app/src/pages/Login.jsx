@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useLoginUserMutation } from "../services/appApi";
-
-import { LinkContainer } from "react-router-bootstrap";
 import logo from "../assets/chatlogologin.jpg";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -73,7 +71,7 @@ function Login() {
           </Form>
         </Col>
         <Col md={6}>
-          <img src={logo} className="home__bg" />
+          <img src={logo} className="home__bg" alt="loading" />
         </Col>
       </Row>
     </Container>

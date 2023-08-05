@@ -22,7 +22,7 @@ function Home() {
         </div>
       </Col>
       <Col md={6}>
-        <img src={logo} className="home__bg" />
+        <img src={logo} className="home__bg" alt="loading" />
       </Col>
     </Row>
   );
