@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useCallback } from "react";
 import { Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
@@ -14,14 +14,10 @@ function Sidebar() {
     setCurrentRoom,
     members,
     setMembers,
-    messages,
-    setMessages,
     privateMemberMsg,
     setPrivateMemberMsg,
     rooms,
     setRooms,
-    newMessages,
-    setNewMessages,
   } = useContext(AppContext);
 
   function joinRoom(room, isPublic = true) {
@@ -42,6 +38,12 @@ function Sidebar() {
     if (currentRoom !== room) dispatch(addNotifications(room));
   });
 
+  const getRooms = useCallback(() => {
+    fetch("http://localhost:5001/rooms")
+      .then((res) => res.json())
+      .then((data) => setRooms(data));
+  }, [setRooms]);
+
   useEffect(() => {
     if (user) {
       setCurrentRoom("general");
@@ -49,17 +51,26 @@ function Sidebar() {
       socket.emit("join-room", "general");
       socket.emit("new-user");
     }
-  }, []);
+  }, [user, setCurrentRoom, socket, getRooms]);
+
+  // useEffect(() => {
+  //   if (user) {
+  //     setCurrentRoom("general");
+  //     getRooms();
+  //     socket.emit("join-room", "general");
+  //     socket.emit("new-user");
+  //   }
+  // }, []);
 
   socket.off("new-user").on("new-user", (payload) => {
     setMembers(payload);
   });
 
-  function getRooms() {
-    fetch("http://localhost:5001/rooms")
-      .then((res) => res.json())
-      .then((data) => setRooms(data));
-  }
+  // function getRooms() {
+  //   fetch("http://localhost:5001/rooms")
+  //     .then((res) => res.json())
+  //     .then((data) => setRooms(data));
+  // }
 
   function orderId(id1, id2) {
     if (id1 > id2) {
@@ -117,7 +128,11 @@ function Sidebar() {
           >
             <Row>
               <Col xs={2} className="member-status">
-                <img src={member.picture} className="member-status-img" />
+                <img
+                  src={member.picture}
+                  className="member-status-img"
+                  alt="loading"
+                />
                 {member.status === "online" ? (
                   <i className="fas fa-circle sidebar-online-status"></i>
                 ) : (

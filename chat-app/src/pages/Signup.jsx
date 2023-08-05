@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useSignupUserMutation } from "../services/appApi";
-import { LinkContainer } from "react-router-bootstrap";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/signuplogo.jpg";
 import defaultimg from "../assets/defaultimg.png";
 import "./Signup.css";
@@ -74,6 +73,7 @@ function Signup() {
               <img
                 src={imagePreview || defaultimg}
                 className="signup-profile-pic"
+                alt="loading"
               />
               <label htmlFor="image-upload" className="image-upload-label">
                 <i className="fas fa-plus-circle add-picture-icon"></i>
@@ -129,7 +129,7 @@ function Signup() {
           </Form>
         </Col>
         <Col md={6}>
-          <img src={logo} className="signup__bg" />
+          <img src={logo} className="signup__bg" alt="loading" />
         </Col>
       </Row>
     </Container>

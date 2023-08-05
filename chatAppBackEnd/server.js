@@ -77,9 +77,8 @@ io.on("connection", (socket) => {
     });
     let roomMessages = await getLastMessagesFromRoom(room);
     roomMessages = sortRoomMessagesByDate(roomMessages);
-
+    // sending message to room
     io.to(room).emit("room-messages", roomMessages);
-
     socket.broadcast.emit("notifications", room);
   });
 
